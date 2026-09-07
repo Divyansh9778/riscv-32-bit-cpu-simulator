@@ -1,7 +1,6 @@
 #include "Assembler.hpp"
-#include "DataControl.cpp"
 #include "Pipeline.hpp"
-#include "utils.hpp"
+#include "Utils.hpp"
 
 #include <iostream>
 using namespace std;

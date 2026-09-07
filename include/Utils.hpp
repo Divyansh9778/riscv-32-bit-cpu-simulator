@@ -1,7 +1,7 @@
 #ifndef UTILS_HPP
 #define UTILS_HPP
 
-#include<bits/stdc++.h>
+#include <bits/stdc++.h>
 using namespace std;
 
 string extractBits(const string& bin, int hi, int lo){

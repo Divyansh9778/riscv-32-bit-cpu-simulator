@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
-#include "Executer.cpp"
+#include "Executor.cpp"
 using namespace std;
 
 int main(){
     // Fetch
-    ifstream file("input.txt");
+    ifstream file("examples/input.txt");
     string line;
 
     // Decode

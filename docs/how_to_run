@@ -1,0 +1,29 @@
+Build the executables
+
+Open a terminal in that folder and run:
+
+make
+
+
+This will compile and produce:
+
+./CacheController
+./TraceGenerator
+
+
+If make fails, run manually:
+
+g++ -std=c++17 -O2 CacheController.cpp -o CacheController
+g++ -std=c++17 -O2 TraceGenerator.cpp -o TraceGenerator
+
+Generate a trace (matrix-multiplication–style)
+
+Example:
+
+./TraceGenerator 64 64 1 4 example_trace.txt
+
+Run the cache simulator
+
+Use:
+
+./CacheController config.cfg example_trace.txt
