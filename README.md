@@ -143,7 +143,7 @@ The cache simulator evaluates multiple cache organizations and write policies an
 
 For detailed build and execution instructions, see:
 
-[How to Build and Run](docs/how_to_run.md)
+[How to Build and Run](docs/how_to_run)
 
 ## Supported Cache Configurations
 
@@ -225,7 +225,7 @@ The cache simulator can then be used independently with generated or user-provid
 
 For detailed instructions on installation, building, running each component, and the complete workflow:
 
-**[docs/how_to_run.md](docs/how_to_run.md)**
+**[docs/how_to_run.md](docs/how_to_run)**
 
 ## Author
 
