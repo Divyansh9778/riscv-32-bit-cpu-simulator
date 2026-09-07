@@ -225,7 +225,7 @@ The cache simulator can then be used independently with generated or user-provid
 
 For detailed instructions on installation, building, running each component, and the complete workflow:
 
-**[docs/how_to_run.md](docs/how_to_run)**
+**[docs/how_to_run](docs/how_to_run)**
 
 ## Author
 
