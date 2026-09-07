@@ -1,2 +1,5 @@
-a.exe
-CorrectExec
+*.o
+*.out
+*.exe
+.vscode/
+build/

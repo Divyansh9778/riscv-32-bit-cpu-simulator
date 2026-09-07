@@ -1,29 +1,313 @@
-Build the executables
+# How to Run
 
-Open a terminal in that folder and run:
+## Requirements
+
+Make sure the following are installed:
+
+- `g++`
+- `make`
+- C++17-compatible compiler
+
+Check:
+
+```bash
+g++ --version
+make --version
+```
+
+---
+
+## 1. Build the Project
+
+Open a terminal in the project root:
+
+```bash
+cd 32-bit-RISC-V-CPU-Simulator
+```
+
+Build all components:
+
+```bash
+make
+```
+
+A successful build creates three executables in the `build/` directory:
+
+```text
+build/
+├── riscv_cpu
+├── cache_simulator
+└── trace_generator
+```
+
+You can verify them with:
+
+```bash
+ls -lh build/
+```
+
+---
+
+# 2. After the build succeeds, you can run the three components below.
+
+| Executable | Purpose |
+|---|---|
+| `riscv_cpu` | Runs the 32-bit RISC-V CPU simulator |
+| `trace_generator` | Generates a memory-access trace |
+| `cache_simulator` | Simulates the cache using a memory-access trace |
+
+---
+
+## 2.1 Run the RISC-V CPU Simulator
+
+The CPU simulator uses the sample assembly program:
+
+```text
+examples/input.txt
+```
+
+Run:
+
+```bash
+./build/riscv_cpu
+```
+
+The simulator displays:
+
+- Instruction fetch
+- Instruction decode
+- Execute stage
+- Write-back
+- Pipeline stalls
+- Branch/jump handling
+- Register values
+- Final register state
+
+The included example calculates:
+
+```text
+6! = 720
+```
+
+So the final result should include:
+
+```text
+x2 = 720
+```
+
+No additional arguments are required.
+
+---
+
+## 2.2 Generate a Memory-Access Trace
+
+The cache simulator requires a memory-access trace.
+
+Use the trace generator to create one.
+
+### Syntax
+
+```bash
+./build/trace_generator N M stride element_size output_file
+```
+
+### Example
+
+```bash
+./build/trace_generator 64 64 1 4 examples/example_trace.txt
+```
+
+This generates a matrix-multiplication-style memory-access trace and writes it to:
+
+```text
+examples/example_trace.txt
+```
+
+After generating the trace, you can check it with:
+
+```bash
+head examples/example_trace.txt
+```
+
+The trace generator arguments are:
+
+| Argument | Meaning |
+|---|---|
+| `N` | First matrix dimension |
+| `M` | Second matrix dimension |
+| `stride` | Memory access stride |
+| `element_size` | Element size in bytes |
+| `output_file` | Output trace file |
+
+You may also provide your own compatible trace file instead of generating one.
+
+---
+
+## 2.3 Run the Cache Simulator
+
+Once a trace has been generated, run the cache simulator.
+
+The simulator uses:
+
+```text
+config/config.cfg
+```
+
+for the cache configuration and:
+
+```text
+examples/example_trace.txt
+```
+
+as the memory-access trace.
+
+Run:
+
+```bash
+./build/cache_simulator config/config.cfg examples/example_trace.txt
+```
+
+The simulator reports results for:
+
+- Direct-Mapped + Write-Through
+- Direct-Mapped + Write-Back
+- Fully Associative + Write-Through
+- Fully Associative + Write-Back
+- 4-Way Set Associative + Write-Through
+- 4-Way Set Associative + Write-Back
+
+For each configuration, the output includes statistics such as:
+
+```text
+Accesses
+Hits
+Misses
+Miss Rate
+Writebacks
+MemBytes
+Cycles
+AMAT
+Bytes/Cycle
+```
+
+---
+
+# 3. Complete Example
+
+To run the complete project from start to finish:
+
+```bash
+make
+```
+
+Then run the CPU simulator:
+
+```bash
+./build/riscv_cpu
+```
+
+Generate a memory trace:
+
+```bash
+./build/trace_generator 64 64 1 4 examples/example_trace.txt
+```
+
+Finally, run the cache simulator:
+
+```bash
+./build/cache_simulator config/config.cfg examples/example_trace.txt
+```
+
+The CPU simulator is independent and does not require the trace generator.
+
+The trace generator and cache simulator are used together:
+
+```text
+Trace Generator
+      ↓
+example_trace.txt
+      ↓
+Cache Simulator
+```
+
+---
+
+# 4. Build Individual Components
+
+You do not need to rebuild the entire project every time.
+
+Build only the RISC-V CPU simulator:
+
+```bash
+make cpu
+```
+
+Build only the cache simulator:
+
+```bash
+make cache
+```
+
+Build only the trace generator:
+
+```bash
+make trace
+```
+
+---
+
+# 5. Clean the Build
+
+To remove all generated executables:
+
+```bash
+make clean
+```
+
+Then rebuild everything:
+
+```bash
+make
+```
+
+---
+
+# 6. Makefile Help
+
+To see the available build commands:
+
+```bash
+make help
+```
+
+Available targets:
+
+```text
+make        Build all executables
+make cpu    Build RISC-V CPU simulator
+make cache  Build cache simulator
+make trace  Build trace generator
+make clean  Remove build files
+make help   Show available commands
+```
+
+---
+
+# Quick Start
+
+For someone using the project for the first time:
+
+```bash
+git clone https://github.com/Divyansh9778/32-bit-RISC-V-CPU-Simulator
+cd 32-bit-RISC-V-CPU-Simulator
 
 make
 
+./build/riscv_cpu
 
-This will compile and produce:
+./build/trace_generator 64 64 1 4 examples/example_trace.txt
 
-./CacheController
-./TraceGenerator
+./build/cache_simulator config/config.cfg examples/example_trace.txt
+```
 
-
-If make fails, run manually:
-
-g++ -std=c++17 -O2 CacheController.cpp -o CacheController
-g++ -std=c++17 -O2 TraceGenerator.cpp -o TraceGenerator
-
-Generate a trace (matrix-multiplication–style)
-
-Example:
-
-./TraceGenerator 64 64 1 4 example_trace.txt
-
-Run the cache simulator
-
-Use:
-
-./CacheController config.cfg example_trace.txt
+That's the complete workflow.
