@@ -1,6 +1,6 @@
 #include "Controller.hpp"
 
-ControlSignals getControlSignal(const string& op, uint8_t func3, uint8_t func7){
+ControlSignals getControlSignal(const string& op, [[maybe_unused]] uint8_t func3, [[maybe_unused]] uint8_t func7){
     ControlSignals signals = {};
 
     if (op == "0110011"){ // R

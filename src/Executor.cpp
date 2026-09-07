@@ -1,6 +1,8 @@
-#include "Assembler.hpp"
+#include "Controller.hpp"
 #include "Pipeline.hpp"
+#include "Assembler.hpp"
 #include "Utils.hpp"
+#include "DataControl.cpp"
 
 #include <iostream>
 using namespace std;
@@ -9,10 +11,10 @@ vector<int32_t> regs(32, 0);
 vector<int32_t> memory(1024, 0);
 
 void execute() {
-    IF_ID if_id;    if_id.empty = true;
-    ID_EX id_ex;    id_ex.empty = true;
-    EX_MEM ex_mem;  ex_mem.empty = true;
-    MEM_WB mem_wb;  mem_wb.empty = true;
+    IF_ID if_id;      if_id.empty = true;
+    ID_EX id_ex;      id_ex.empty = true;
+    EX_MEM ex_mem{};  ex_mem.empty = true;
+    MEM_WB mem_wb{};  mem_wb.empty = true;
 
     int32_t PC = 0;
     bool finished = false;
@@ -36,7 +38,8 @@ void execute() {
         }
 
         //  MEM stage 
-        MEM_WB new_mem_wb; new_mem_wb.empty = true;
+        MEM_WB new_mem_wb{}; new_mem_wb.empty = true;
+        
         if (!ex_mem.empty) {
             new_mem_wb.rd = ex_mem.rd;
             new_mem_wb.regWrite = ex_mem.regWrite;

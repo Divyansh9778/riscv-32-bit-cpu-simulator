@@ -1,6 +1,7 @@
-#include <bits/stdc++.h>
 #include "Executor.cpp"
 using namespace std;
+
+void execute();
 
 int main(){
     // Fetch
